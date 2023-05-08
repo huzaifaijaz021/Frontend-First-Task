@@ -37,7 +37,7 @@ export const deleteUser = createAsyncThunk('deleteUser', async (id, { rejectWith
 //update User Details action
 export const updateUser = createAsyncThunk('updateUser', async (updateData, { rejectWithValue }) => {
     try {
-        const response = await axios.put(`http://localhost:4000/update/${updateData._id}`, updateData);
+        const response = await axios.put(`http://localhost:4000/update/${updateData._id}`, { updateData });
         return response.data;
     } catch (error) {
         return rejectWithValue(error);
