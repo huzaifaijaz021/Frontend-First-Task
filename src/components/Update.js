@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { updateUser } from '../features/userDetailSlice';
+import { showUser, updateUser } from '../features/userDetailSlice';
 
 function Update() {
     const { id } = useParams();
@@ -12,16 +12,21 @@ function Update() {
     const { users, loading } = useSelector((state) => state.app);
 
     useEffect(() => {
-        if (id) {
+        if (users.length === 0) {
+            dispatch(showUser({}));
+        }
+
+        else if (id) {
             const singleUser = users.filter((item) => item._id === id);
+            console.log("🚀 ~ file: Update.js:18 ~ useEffect ~ singleUser:", singleUser)
             setUpdateData(singleUser[0]);
         }
-    }, []);
+    }, [id, users]);
 
     const newData = (e) => {
         setUpdateData({ ...updateData, [e.target.name]: e.target.value })
     }
-    console.log("hello", updateData);
+    // console.log("hello", updateData);
 
     const handleUpdate = (e) => {
         e.preventDefault();
